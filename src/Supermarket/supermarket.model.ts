@@ -2,19 +2,22 @@ import { Schema, model } from "mongoose";
 
 
 export interface Product {
-    code: number;
-    name: string;
     priceUpdateDate: Date;
-    price: number;
-
+    itemCode: number;
+    itemType: number;
+    itemName: string;
     manufacturerName: string;
+    manufactureCountry: string;
     manufacturerItemDescription: string;
-
-    unityQuantity: string;
+    unitQty: string;
     quantity: number;
+    bIsWeighted: number;
     unitOfMeasure: string;
-    quantityInPackage: number;
+    qtyInPackage: number;
+    itemPrice: number;
     unitOfMeasurePrice: number;
+    allowDiscount: number;
+    itemStatus: number;
 }
 
 export interface Branch {
@@ -30,19 +33,22 @@ export interface Supermarket {
 }
 
 const productSchema = new Schema<Product>({
-    code: Number,
-    name: String,
     priceUpdateDate: Date,
-    price: Number,
-
+    itemCode: Number,
+    itemType: Number,
+    itemName: String,
     manufacturerName: String,
+    manufactureCountry: String,
     manufacturerItemDescription: String,
-
-    unityQuantity: String,
+    unitQty: String,
     quantity: Number,
+    bIsWeighted: Number,
     unitOfMeasure: String,
-    quantityInPackage: Number,
-    unitOfMeasurePrice: Number
+    qtyInPackage: Number,
+    itemPrice: Number,
+    unitOfMeasurePrice: Number,
+    allowDiscount: Number,
+    itemStatus: Number
 });
 
 const branchSchema = new Schema<Branch>({

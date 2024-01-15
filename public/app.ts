@@ -6,6 +6,30 @@ import {
 } from "./Supermarket.model.js";
 import { loadCurrentCartFromStorage } from "./Cart.model.js";
 
+function populateBranchSelectorBySelectedChain(
+	supermarkets: Supermarkets,
+	chainView: HTMLSelectElement,
+	branchView: HTMLSelectElement
+) {
+	const selectedOption = chainView.options[chainView.selectedIndex];
+	const selectedChainId = selectedOption.getAttribute("data-chain-id");
+
+	if (!selectedChainId) {
+		return;
+	}
+	const branches = supermarkets.find(
+		(supermarket) => supermarket.chainId === selectedChainId
+	)?.branches;
+
+	branchView.replaceChildren();
+
+	if (!branches) {
+		return;
+	}
+	console.log(branches);
+	branchView.innerHTML = renderBranchList(branches);
+}
+
 function renderBranchList(branches: Branches) {
 	return `${branches.map(
 		(branch) =>
@@ -40,29 +64,23 @@ function showCartSetupDialog(supermarkets: Supermarkets) {
 	const chainSelector = dialogView.querySelector(
 		"#branch-selector__chain"
 	) as HTMLSelectElement;
+
 	const branchSelector = dialogView.querySelector(
 		"#branch-selector__branch"
 	) as HTMLSelectElement;
 
+	populateBranchSelectorBySelectedChain(
+		supermarkets,
+		chainSelector,
+		branchSelector
+	);
+
 	chainSelector.addEventListener("change", (event) => {
-		const selectView = event.target as HTMLSelectElement;
-		const selectedOption = selectView.options[selectView.selectedIndex];
-		const selectedChainId = selectedOption.getAttribute("data-chain-id");
-
-		if (!selectedChainId) {
-			return;
-		}
-		const branches = supermarkets.find(
-			(supermarket) => supermarket.chainId === selectedChainId
-		)?.branches;
-
-		branchSelector.replaceChildren();
-
-		if (!branches) {
-			return;
-		}
-		console.log(branches);
-		branchSelector.innerHTML = renderBranchList(branches);
+		populateBranchSelectorBySelectedChain(
+			supermarkets,
+			chainSelector,
+			branchSelector
+		);
 	});
 
 	document.body.append(dialogView);

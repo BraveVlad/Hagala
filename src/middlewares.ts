@@ -1,9 +1,23 @@
+import express from "express";
 
-export function setMiddlewares(app: Express.Application) {
+export function setLoggerMiddleware(app: express.Application) {
+    const logRequests: express.RequestHandler = (req, res, next) => {
+        console.log(req.method, req.url, req.body);
+        next();
+    };
+    app.use(logRequests);
 
-    // TODO - Set logging middleware
+}
 
-    // TODO - Set global error handling middleware
+export function setErrorHandlerMiddleware(app: express.Application) {
+    const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
+        if (res.headersSent) {
+            next(err);
+        }
 
-
+        console.error(err);
+        res.status(500);
+        res.send("Something went wrong");
+    };
+    app.use(errorHandler);
 }

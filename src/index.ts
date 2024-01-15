@@ -4,15 +4,20 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import { json } from "body-parser";
 import mongoose from "mongoose";
+import { setRouters } from "./routers";
+import { setErrorHandlerMiddleware, setLoggerMiddleware } from "./middlewares";
 
 const app = express();
 
 app.use(cookieParser());
 app.use(json());
 
-app.get("/api/hello", (req, res) => {
-    res.send("world");
-});
+setLoggerMiddleware(app);
+
+setRouters(app);
+
+setErrorHandlerMiddleware(app);
+
 
 app.use(express.static("public"));
 
@@ -23,15 +28,9 @@ async function init() {
     if (!process.env.MONGO_CONNECTION_STRING) {
         throw new Error("Must provide connection string for mongodb");
     }
-
-    if (!process.env.DB_NAME) {
-        throw new Error("Must provide main DB name");
-    }
-
-    // TODO - Set DB AND CONNECTION STRING
-    // await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
-    //     dbName: process.env.DB_NAME
-    // });
+    await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
+        dbName: "hagala"
+    });
 
     server.listen(port, () => console.log(`Listening on http://localhost:${port}`));
 }

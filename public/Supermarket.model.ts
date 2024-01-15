@@ -1,3 +1,4 @@
+import { json } from "body-parser";
 
 export type BranchProduct = {
     code: string;
@@ -25,10 +26,10 @@ export type Supermarkets = Supermarket[];
 
 export async function fetchSupermarkets() {
     try {
-        const supermarkets = await fetch(`/api/supermarket/chains`).then((result) => result.json());
-        console.log(`fetched supermarkets: `)
-        console.log(supermarkets)
+        const supermarkets: Supermarkets = await fetch(`/api/supermarket/chains-list`).then((result) => result.json());
+
+        return supermarkets;
     } catch (error) {
-        console.log(error)
+        throw new Error("Unable to fetch supermarkets")
     }
 }

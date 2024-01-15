@@ -1,4 +1,4 @@
-import { Branch, Supermarket } from "./supermarket.model"
+import { Branch, Supermarket } from "./Supermarket.model.js"
 
 const STORAGE_CURRENT_CART = "current_cart";
 

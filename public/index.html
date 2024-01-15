@@ -4,16 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Hagala</title>
     <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-    <h1>Index</h1>
 
-    <p>Welcome.</p>
+    <header class="navbar">
+        <h1 class="navbar__logo">Hagala</h1>
+        <menu class="navbar__menu">
+            <li class="navbar__profile">Welcome, Gilad</li>
+            <li class="navbar__login"><a href="">Login</a></li>
+        </menu>
+    </header>
 
-    <script src="app.js"></script>
+
+    <main class="app">
+
+        <div class="budgetview">
+            300/1000
+        </div>
+
+        <div class="scanner">
+            Here lies the qr scanner
+        </div>
+
+        <article class="cartview">
+            My products:
+            <ul class="cartview__products-list">
+                <li class="cartview__products-list__item">Product ###### price: 1234$</li>
+                <li class="cartview__products-list__item">Product ###### price: 1234$</li>
+                <li class="cartview__products-list__item">Product ###### price: 1234$</li>
+            </ul>
+        </article>
+    </main>
+
+    <script type="module" src="app.js"></script>
 </body>
 
 </html>

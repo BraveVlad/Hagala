@@ -24,9 +24,14 @@ async function init() {
         throw new Error("Must provide connection string for mongodb");
     }
 
-    await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
-        dbName: "app-db-name"
-    });
+    if (!process.env.DB_NAME) {
+        throw new Error("Must provide main DB name");
+    }
+
+    // TODO - Set DB AND CONNECTION STRING
+    // await mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
+    //     dbName: process.env.DB_NAME
+    // });
 
     server.listen(port, () => console.log(`Listening on http://localhost:${port}`));
 }
